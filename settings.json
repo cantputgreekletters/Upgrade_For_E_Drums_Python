@@ -1,0 +1,23 @@
+{
+    "Pitches":{
+	"Crash": 49,
+	"HHc": 46,
+	"HHpedal": 21,
+	"Kick": 43,
+	"Ride": 51,
+	"Snare": 38,
+	"Tom1": 48,
+	"Tom2": 45,
+	"Tom3": 36
+    },
+    "SoundLocations":{
+        "Crash":"L:/Code/Drums/Sounds/Crash.wav",
+        "Kick":"L:/Code/Drums/Sounds/Kick.wav",
+        "OpenHH":"L:/Code/Drums/Sounds/OpenHH.wav",
+        "Ride":"L:/Code/Drums/Sounds/Ride.wav",
+        "Snare": "L:/Code/Drums/Sounds/Snare.wav",
+        "Tom1":"L:/Code/Drums/Sounds/Tom1.wav",
+        "Tom2":"L:/Code/Drums/Sounds/Tom2.wav",
+        "Tom3":"L:/Code/Drums/Sounds/Tom3.wav"
+    }
+}
