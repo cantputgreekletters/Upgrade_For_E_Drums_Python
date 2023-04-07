@@ -1,6 +1,5 @@
 import pygame.midi as midi
 import pygame.mixer as mixer
-import tkinter as tk
 
 def __get_data():
     import json
@@ -58,19 +57,14 @@ def __play(default_id):
         break
 
 def Drum():
-    root = tk.Tk()
-    root.geometry("800x600")
-    root.resizable(width=False,height=False)
-    tk.Button(master=root,command=lambda:root.destroy(),text="Quit").pack()
     midi.init()
     default_id = midi.get_default_input_id()
     if default_id != -1:
         __play(default_id)
         
-        root.destroy()
     else:
-        tk.Label(master=root,text="No midi input device found!").pack()
-    root.mainloop()
+        print("No device found")
+    
     mixer.quit()
 
 if __name__=="__main__":
