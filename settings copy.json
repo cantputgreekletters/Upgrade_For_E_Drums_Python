@@ -1,0 +1,23 @@
+{
+    "Pitches":{
+	"Crash": 49,
+	"HHc": 46,
+	"HHpedal": 21,
+	"Kick": 43,
+	"Ride": 51,
+	"Snare": 38,
+	"Tom1": 48,
+	"Tom2": 45,
+	"Tom3": 36
+    },
+    "SoundLocations":{
+        "Crash":"Sounds/Crash.wav",
+        "Kick":"Sounds/Kick.wav",
+        "OpenHH":"Sounds/OpenHH.wav",
+        "Ride":"Sounds/Ride.wav",
+        "Snare": "Sounds/Snare.wav",
+        "Tom1":"Sounds/Tom1.wav",
+        "Tom2":"Sounds/Tom2.wav",
+        "Tom3":"Sounds/Tom3.wav"
+    }
+}

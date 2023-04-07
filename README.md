@@ -24,13 +24,8 @@ If anyone knows how to fix this problem, leave a comment or fix it on a new bran
 ### Configuration: <a name="subparagraph1"></a>
 When you start the program, head on the button "check input" and use a pad on your e drum kit. On the screen there should be some text which shows the pitch of the pad. The number corresponds to your pad so write it down somewhere.
 
-Example:
-# Gif
 
 Next, you need to head on the main menu -> options and insert to the right field your numbers.
-
-Like this:
-# Gif
 
 After assigning the pitch you can use any custom sound file you want on the field next to the one that you put the number of the pitch.
 
