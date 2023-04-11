@@ -29,6 +29,9 @@ Next, you need to head on the main menu -> options and insert to the right field
 
 After assigning the pitch you can use any custom sound file you want on the field next to the one that you put the number of the pitch.
 
+You can also add your own pad by pressing the "Create" button and filling the fields.
+(You can remove it too but the Delete button deletes the last field that you put so be ware!!)
+
 After filling every field press the "Save" Button.
 
 After following these steps you are ready to use the drums!

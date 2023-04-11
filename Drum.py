@@ -1,48 +1,71 @@
 import pygame.midi as midi
 import pygame.mixer as mixer
 
+global num
+num = 80
+
+class Pad:
+    def __init__(self,name:str,sound_path:str,pitch:int,channel:int,sensitivity:int = 80) -> None:
+        self.name = name
+        self.__pitch = pitch
+        self.__sensitivity = sensitivity
+        self.__channel = channel
+        print(name)
+        self.__sound = mixer.Sound(sound_path)
+
+    def Play_Sound(self,pitch:int,velocity:int):
+        if pitch == self.__pitch:
+            #vol = velocity / self.__sensitivity
+            #mixer.Channel(self.__channel).set_volume(vol)
+            mixer.Channel(self.__channel).play(self.__sound)
+
 def __get_data():
     import json
     with open("settings.json","r") as f:
         data = json.load(f)
-    Dicts = (data["Pitches"],data["SoundLocations"])
+    Dicts = (data["Pitches"],data["SoundLocations"],data["Sensitivities"])
     for i in Dicts:
         print(i)
         yield i
 gd = __get_data()
 pitches = gd.__next__()
 SoundLocation = gd.__next__()
+Sensitivity = gd.__next__()
+
 del gd
 mixer.init()
-mixer.set_num_channels(8)
-Snare = mixer.Sound(SoundLocation["Snare"])
-Crash = mixer.Sound(SoundLocation["Crash"])
-HHc = mixer.Sound(SoundLocation["OpenHH"])
-#HHpedal = mixer.Sound(SoundLocation["HHpedal"])
-Kick = mixer.Sound(SoundLocation["Kick"])
-Ride = mixer.Sound(SoundLocation["Ride"])
-Tom1 = mixer.Sound(SoundLocation["Tom1"])
-Tom2 = mixer.Sound(SoundLocation["Tom2"])
-Tom3 = mixer.Sound(SoundLocation["Tom3"])
+
+
+names = list(pitches.keys())
+Sound_paths = list(SoundLocation.values())
+pitches = list(pitches.values())
+Sensitivities = list(Sensitivity.values())
+pops = []
+for Index in range(0,len(names)):
+    if Sound_paths[Index] == "No_Location":
+        pops.append(Index)
+pops.sort(reverse= True)
+for i in pops:
+    names.pop(i)
+    Sound_paths.pop(i)
+    pitches.pop(i)
+    Sensitivities.pop(i)
+
+len_of_instruments = len(names)
+mixer.set_num_channels(len_of_instruments - 1)
+channels = [i for i in range(len_of_instruments)]
+global objects
+
+objects = [Pad(name,sound_path,pitch,channel,sensitivity) 
+for name,sound_path,pitch,channel,sensitivity 
+in zip(names,Sound_paths,pitches,channels,Sensitivities)]
+
+del names,Sound_paths,pitches,channels,Sensitivities
 
 #Test Midi output from pygame
-def __Trigger_Sound(pitch):
-    if pitch == pitches["Crash"]:
-        mixer.Channel(0).play(Crash)
-    if pitch == pitches["Kick"]:
-        mixer.Channel(1).play(Kick)
-    if pitch == pitches["HHc"]:
-        mixer.Channel(2).play(HHc)
-    if pitch == pitches["Ride"]:
-        mixer.Channel(3).play(Ride)
-    if pitch == pitches["Snare"]:
-        mixer.Channel(4).play(Snare)   
-    if pitch == pitches["Tom1"]:
-        mixer.Channel(5).play(Tom1)
-    if pitch == pitches["Tom2"]:
-        mixer.Channel(6).play(Tom2)
-    if pitch == pitches["Tom3"]:
-        mixer.Channel(7).play(Tom3)
+def __Trigger_Sound(pitch,velocity):
+    for i in objects:
+        i.Play_Sound(pitch,velocity)
  
 def __play(default_id):
     midi_input = midi.Input(device_id=default_id)
@@ -52,7 +75,8 @@ def __play(default_id):
       results = midi_input.read(num_events=3)
       
       if len(results) > 0:
-        __Trigger_Sound(results[0][0][1]) 
+        if results[0][0][1] > 0:
+            __Trigger_Sound(results[0][0][1],results[0][0][2]) 
       if is_pressed("f"):
         break
 
