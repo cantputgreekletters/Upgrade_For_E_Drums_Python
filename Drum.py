@@ -1,5 +1,6 @@
 import pygame.midi as midi
 import pygame.mixer as mixer
+import tkinter as tk
 
 global num
 num = 80
@@ -80,17 +81,27 @@ def __play(default_id):
       if is_pressed("f"):
         break
 
-def Drum():
+def drum():
     midi.init()
     default_id = midi.get_default_input_id()
     if default_id != -1:
+        tk.Label(master=root,text="You are ready to drum\nPress f to stop")
         __play(default_id)
+        root.destroy()
         
     else:
+        tk.Label(master=root,text="No device found").pack()
         print("No device found")
     
     mixer.quit()
 
+def Drum():
+    global root
+    root = tk.Tk()
+    root.title("Drum")
+    root.geometry("800x600")
+    root.after(0,drum)
+    root.mainloop()
 if __name__=="__main__":
     Drum()
 
