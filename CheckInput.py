@@ -2,7 +2,8 @@ import pygame.midi as midi
 import tkinter as tk
 
 
-def __check(default_id):
+def __check():
+    global default_id
     midi_input = midi.Input(device_id=default_id)
     print("press f to stop")
     from keyboard import is_pressed
@@ -10,18 +11,23 @@ def __check(default_id):
         results = midi_input.read(num_events=3)
         if len(results) > 0:
             if results[0][0][0] != 248:
+                global b
+                b = results[0][0][1]
                 print(f"pitch = {results[0][0][1]}") 
                 print(f"velocity = {results[0][0][2]}")
             if is_pressed("f"):
                 break
+    root.destroy()
 
 def MIDI():
     midi.init()
+    global default_id
     default_id = midi.get_default_input_id()
     if default_id != -1:
-        tk.Label(master=root,text="Midi device found\nPress f to stop")
-        __check(default_id)
-        root.destroy()
+        tk.Label(master=root,text="Midi device found\nPress f to stop").pack()
+        tk.Button(master=root,text="start",command=__check).pack()
+        Results = tk.Label(master=root,textvariable=b).pack()
+        
     else:
         print("NO DEVICE")
         tk.Label(master=root,text="No Midi input device found!").pack()

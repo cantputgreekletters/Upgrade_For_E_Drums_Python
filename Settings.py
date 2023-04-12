@@ -83,7 +83,7 @@ def open_settings():
                 return int(self.__entry_pitch.get())
         def get_sound_location(self):
             if self.__entry_loc.get() in [""," "]:
-                return "No_Location"
+                return ""
             else:
                 return str(self.__entry_loc.get())
         

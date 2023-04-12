@@ -15,7 +15,7 @@ class Pad:
         self.__sound = mixer.Sound(sound_path)
 
     def Play_Sound(self,pitch:int,velocity:int):
-        if pitch == self.__pitch:
+        if pitch == self.__pitch and velocity > 100 - self.__sensitivity:
             #vol = velocity / self.__sensitivity
             #mixer.Channel(self.__channel).set_volume(vol)
             mixer.Channel(self.__channel).play(self.__sound)
@@ -43,7 +43,7 @@ pitches = list(pitches.values())
 Sensitivities = list(Sensitivity.values())
 pops = []
 for Index in range(0,len(names)):
-    if Sound_paths[Index] == "No_Location":
+    if Sound_paths[Index] in ["No_Location",""," "]:
         pops.append(Index)
 pops.sort(reverse= True)
 for i in pops:
@@ -68,7 +68,8 @@ def __Trigger_Sound(pitch,velocity):
     for i in objects:
         i.Play_Sound(pitch,velocity)
  
-def __play(default_id):
+def __play():
+    mixer.init()
     midi_input = midi.Input(device_id=default_id)
     print("press f to stop")
     from keyboard import is_pressed
@@ -80,14 +81,15 @@ def __play(default_id):
             __Trigger_Sound(results[0][0][1],results[0][0][2]) 
       if is_pressed("f"):
         break
+    root.destroy()
 
 def drum():
     midi.init()
+    global default_id
     default_id = midi.get_default_input_id()
     if default_id != -1:
-        tk.Label(master=root,text="You are ready to drum\nPress f to stop")
-        __play(default_id)
-        root.destroy()
+        tk.Label(master=root,text="You are ready to drum\nPress f to stop").pack()
+        tk.Button(master=root,text="Start",command=__play).pack()        
         
     else:
         tk.Label(master=root,text="No device found").pack()
@@ -100,7 +102,7 @@ def Drum():
     root = tk.Tk()
     root.title("Drum")
     root.geometry("800x600")
-    root.after(0,drum)
+    root.after(1,drum)
     root.mainloop()
 if __name__=="__main__":
     Drum()
