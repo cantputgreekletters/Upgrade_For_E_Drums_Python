@@ -59,20 +59,20 @@ def open_settings():
             self.__entry_sens = None
             
         def constructor(self):
-            self.__entry_name = tk.Entry(master = root,textvariable=self._text)
+            self.__entry_name = tk.Entry(master = root)
             self.__entry_name.place(x=self.__x,y=self.__y)
             self.__entry_name.insert(0,str(self._text))
             
-            self.__entry_pitch = tk.Entry(master = root,textvariable=self._PitchVar,validate="key",validatecommand=vcmd)
+            self.__entry_pitch = tk.Entry(master = root,validate="key",validatecommand=vcmd)
             self.__entry_pitch.place(x=self.__x + 100,y=self.__y)
             self.__entry_pitch.insert(0,str(self._PitchVar))
 
-            self.__entry_loc = tk.Entry(master = root,textvariable=self._LocVar,width=50)
+            self.__entry_loc = tk.Entry(master = root,width=50)
             self.__entry_loc.place(x=self.__x + 300,y=self.__y)
             self.__entry_loc.insert(0,str(self._LocVar))
 
             #Displays same number in every object's entry
-            self.__entry_sens = tk.Entry(master = root,textvariable=self._sensVar,width=5,validate="key",validatecommand=vcmd)
+            self.__entry_sens = tk.Entry(master = root,width=5,validate="key",validatecommand=vcmd)
             self.__entry_sens.place(x=self.__x + 600,y=self.__y)
             self.__entry_sens.insert(0,str(self._sensVar))
 
