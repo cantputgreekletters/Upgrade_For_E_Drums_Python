@@ -142,7 +142,7 @@ def open_settings():
         objects[-1].Destroy()
         
         objects.pop(-1)
-    
+        
     root = tk.Tk()
     global x 
     x = 10
